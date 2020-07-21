@@ -5,7 +5,11 @@ actually, it should be milliohm meter, but it is fine with named mini-ohm-metre 
 
 ![milliohm_meter_20200720_232438_xiaolaba0.jpg](milliohm_meter_20200720_232438_xiaolaba0.jpg)  
 
-lost of source code and schemation diagram, reverse engineering has to be with.
+.  
+.  
+lost of source code and schematic diagram, reverse engineering has to be with.  
+.  
+.  
 
 wiring,
 
