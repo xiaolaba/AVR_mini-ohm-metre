@@ -9,5 +9,5 @@ lost of source code and schemation diagram, reverse engineering has to be with.
 
 wiring,
 
-![milliohm_meter_ wiring_2020-07-21.jpg](milliohm_meter_ wiring_2020-07-21.jpg)
+![milliohm_meter_wiring_2020-07-21.jpg](milliohm_meter_wiring_2020-07-21.jpg)
 
