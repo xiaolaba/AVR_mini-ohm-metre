@@ -6,11 +6,11 @@ AVR MCU + LM317 + HD44780 LCD, ohm metre, range 100 mOhm - 9000 mOhm, re-build, 
   
 actually, it should be milliohm meter, but it is fine with named mini-ohm-metre as it is mini.
 
-lfuse=0xff
-hfuse=0xda
-efuse=0xfd
+lfuse=0xff  
+hfuse=0xda  
+efuse=0xfd  
 
-ATMEGA328P, 16MHz, serial 57600baud, N81
+ATMEGA328P, 16MHz, serial 57600baud, N81  
 
 ![milliohm_meter_samllfont_version_xiaolaba.JPG](milliohm_meter_samllfont_version_xiaolaba.JPG)  
 .  
