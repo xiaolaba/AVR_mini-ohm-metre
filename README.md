@@ -15,3 +15,11 @@ wiring,
 
 ![milliohm_meter_wiring_2020-07-21_xiaolaba.jpg](milliohm_meter_wiring_2020-07-21_xiaolaba.jpg)
 
+.  
+.  
+.  
+.  
+Version 2, big digits display and design used, modified LCD backlight, knocked LEDs from blue to white, much better visual and effectiveness.  
+
+
+![miniOhm_ver2.JPG](miniOhm_ver2.JPG)
