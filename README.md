@@ -22,4 +22,9 @@ wiring,
 Version 2, big digits display and design used, modified LCD backlight, knocked LEDs from blue to white, much better visual and effectiveness.  
 
 
-![miniOhm_ver2.JPG](miniOhm_ver2.JPG)
+![miniOhm_ver2.JPG](miniOhm_ver2.JPG).
+
+https://youtu.be/q15g__HHNWE 
+
+
+
