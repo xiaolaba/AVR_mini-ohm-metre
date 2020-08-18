@@ -1,0 +1,103 @@
+#include "iom16v.h"
+#include "lcd.h"
+
+unsigned char Turn = 0, COM = 0;
+
+/*-------------------------------------奀唗芞-------------------------------------------
+        0 1  2 3  4 5  6 7  8 9  A B  C D  E F
+             _                                       _
+COM0        | |   _    _    _    _    _    _        | |
+       _____| |__| |__| |__| |__| |__| |__| |_______| |__
+                       _
+COM1    _    _        | |   _    _    _    _    _    _
+       | |__| |_______| |__| |__| |__| |__| |__| |__| |__
+                                 _
+COM2    _    _    _    _        | |   _    _    _    _
+       | |__| |__| |__| |_______| |__| |__| |__| |__| |__
+                                           _
+COM3    _    _    _    _    _    _        | |   _    _
+       | |__| |__| |__| |__| |__| |_______| |__| |__| |__
+--------------------------------------------------------------------------------------*/
+#pragma interrupt_handler Timer0_Comp:20  // 眸鳳笢剿
+void Timer0_Comp(void)
+{
+	// COMx峈0麼1ㄛ奀唗芞笢腔0﹜2﹜4﹜6......E
+	TIFR &= ~0x02;
+
+	if(Turn++ == 0)  // COMx峈0ㄛ奀唗芞笢腔0﹜4﹜8﹜C
+	{
+		// COMx峈0ㄛ剒猁珆尨腔SEGㄗCOMxㄘ峈1
+		SEG_LOAD(frame[COM]);
+
+		// COMx峈0ㄛ坳COM峈VDD/2
+		// 垀衄COM IO扢离峈唑腹怀
+		COM_ALL_HALF();
+
+		// COMx IO扢峈芢侺怀堤腴
+		if(COM == 0)      {COM0_LOW();}
+		else if(COM == 1) {COM1_LOW();}
+		else if(COM == 2) {COM2_LOW();}
+		else if(COM == 3) {COM3_LOW();}
+	}
+	else  // COMx峈1ㄛ奀唗芞笢腔2﹜6﹜A﹜E
+	{
+		Turn = 0;
+
+		// COMx峈1ㄛ剒猁珆尨腔SEGㄗCOMxㄘ峈0
+		SEG_LOAD(~frame[COM]);
+
+		// COMx峈1ㄛ坳COM峈VDD/2
+		// 垀衄COM IO扢离峈唑腹怀
+		COM_ALL_HALF();
+
+		// COMx IO扢峈芢侺怀堤詢
+		if(COM == 0)      {COM0_HIGH();}
+		else if(COM == 1) {COM1_HIGH();}
+		else if(COM == 2) {COM2_HIGH();}
+		else if(COM == 3) {COM3_HIGH();}
+
+		if(++COM > 3) COM = 0;
+	}
+}
+
+#pragma interrupt_handler Timer0_OVF:10   // 祛堤笢剿
+void Timer0_OVF(void)
+{
+	// 奀唗芞笢腔1ㄛ3ㄛ5ㄛ7......FㄛCOM睿SEG飲峈0
+	TIFR &= ~0x01;
+
+	// COM睿SEG飲峈0
+	COM_SEG_ALL_LOW();
+}
+/*------------------------------------------------------------------------------------*/
+
+void Delayms(unsigned int ms)
+{
+	unsigned int i;
+
+	for (; ms>0; ms--)
+		for (i=1000; i>0; i--);
+}
+
+void LCDShow_Init(void)  // Timer0辦厒PWM場宎趙
+{
+	DDRA |= 0x0f;    // COM0~3
+	DDRC |= 0x0f;    // SEG8~11
+	DDRD |= 0xff;    // SEG0~7
+
+	TCCR0 = 0x4A;   // 饜离隅奀馱釬婓辦厒PWM耀宒ㄛ8煦
+	OCR0 = 0x3f;    // 扢离眸袙掀誕場硉ㄛ0x3f
+	TIMSK |= 0x03;  // 羲眸鳳笢剿ㄛ祛堤笢剿
+	SREG |= 0x80;   // 羲軞笢剿
+}
+
+void main(void)
+{
+	Delayms(10);
+
+	LCDShow_Init();
+
+	LCD_Write_Str("012345");
+	LCD_Show_Dot(0);
+	while(1);
+}
