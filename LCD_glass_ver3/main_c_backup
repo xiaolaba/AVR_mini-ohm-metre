@@ -1,0 +1,103 @@
+#include "iom16v.h"
+#include "lcd.h"
+
+unsigned char Turn = 0, COM = 0;
+
+/*-------------------------------------时序图-------------------------------------------
+        0 1  2 3  4 5  6 7  8 9  A B  C D  E F
+             _                                       _
+COM0        | |   _    _    _    _    _    _        | |
+       _____| |__| |__| |__| |__| |__| |__| |_______| |__
+                       _
+COM1    _    _        | |   _    _    _    _    _    _
+       | |__| |_______| |__| |__| |__| |__| |__| |__| |__
+                                 _
+COM2    _    _    _    _        | |   _    _    _    _
+       | |__| |__| |__| |_______| |__| |__| |__| |__| |__
+                                           _
+COM3    _    _    _    _    _    _        | |   _    _
+       | |__| |__| |__| |__| |__| |_______| |__| |__| |__
+--------------------------------------------------------------------------------------*/
+#pragma interrupt_handler Timer0_Comp:20  // 捕获中断
+void Timer0_Comp(void)
+{
+	// COMx为0或1，时序图中的0、2、4、6......E
+	TIFR &= ~0x02;
+
+	if(Turn++ == 0)  // COMx为0，时序图中的0、4、8、C
+	{
+		// COMx为0，需要显示的SEG（COMx）为1
+		SEG_LOAD(frame[COM]);
+
+		// COMx为0，其它COM为VDD/2
+		// 所有COM IO设置为悬浮输入
+		COM_ALL_HALF();
+
+		// COMx IO设为推挽输出低
+		if(COM == 0)      {COM0_LOW();}
+		else if(COM == 1) {COM1_LOW();}
+		else if(COM == 2) {COM2_LOW();}
+		else if(COM == 3) {COM3_LOW();}
+	}
+	else  // COMx为1，时序图中的2、6、A、E
+	{
+		Turn = 0;
+
+		// COMx为1，需要显示的SEG（COMx）为0
+		SEG_LOAD(~frame[COM]);
+
+		// COMx为1，其它COM为VDD/2
+		// 所有COM IO设置为悬浮输入
+		COM_ALL_HALF();
+
+		// COMx IO设为推挽输出高
+		if(COM == 0)      {COM0_HIGH();}
+		else if(COM == 1) {COM1_HIGH();}
+		else if(COM == 2) {COM2_HIGH();}
+		else if(COM == 3) {COM3_HIGH();}
+
+		if(++COM > 3) COM = 0;
+	}
+}
+
+#pragma interrupt_handler Timer0_OVF:10   // 溢出中断
+void Timer0_OVF(void)
+{
+	// 时序图中的1，3，5，7......F，COM和SEG都为0
+	TIFR &= ~0x01;
+
+	// COM和SEG都为0
+	COM_SEG_ALL_LOW();
+}
+/*------------------------------------------------------------------------------------*/
+
+void Delayms(unsigned int ms)
+{
+	unsigned int i;
+
+	for (; ms>0; ms--)
+		for (i=1000; i>0; i--);
+}
+
+void LCDShow_Init(void)  // Timer0快速PWM初始化
+{
+	DDRA |= 0x0f;    // COM0~3
+	DDRC |= 0x0f;    // SEG8~11
+	DDRD |= 0xff;    // SEG0~7
+
+	TCCR0 = 0x4A;   // 配置定时器工作在快速PWM模式，8分频
+	OCR0 = 0x3f;    // 设置捕捉比较初值，0x3f
+	TIMSK |= 0x03;  // 开捕获中断，溢出中断
+	SREG |= 0x80;   // 开总中断
+}
+
+void main(void)
+{
+	Delayms(10);
+
+	LCDShow_Init();
+
+	LCD_Write_Str("012345");
+	LCD_Show_Dot(0);
+	while(1);
+}
