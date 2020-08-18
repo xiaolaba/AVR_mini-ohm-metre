@@ -99,7 +99,7 @@ ISR(TIMER0_COMP_vect, ISR_NAKED)  // avr-gcc
 //#pragma interrupt_handler Timer0_OVF:10   // 溢出中斷
 //void Timer0_OVF(void)
 
-https://www.nongnu.org/avr-libc/user-manual/group__avr__interrupts.html
+//https://www.nongnu.org/avr-libc/user-manual/group__avr__interrupts.html
 ISR (TIMER0_OVF_vect, ISR_NAKED)    // avr-gcc
 
 

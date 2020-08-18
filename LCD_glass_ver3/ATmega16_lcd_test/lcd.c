@@ -147,7 +147,7 @@ SEG1        | |       | |  | |       | |            | |
 
 #include <avr/io.h>
 #include <stdint.h>
-#include <avr/interrupt.h>
+//#include <avr/interrupt.h>
 
 #include "lcd.h"
 
