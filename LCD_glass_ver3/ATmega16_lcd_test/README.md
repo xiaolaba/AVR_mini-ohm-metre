@@ -1,6 +1,8 @@
-### copied source code,  
-ATmega16 used, port to AVR-GCC
-key points about porting, 
+### copied source code, 
+https://www.amobbs.com/forum.php?mod=viewthread&tid=4560171  
+
+### ATmega16 used, port to AVR-GCC
+key points about code & porting, 
 
 incldue those in main.c
 ```
