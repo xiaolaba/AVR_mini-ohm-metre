@@ -1,6 +1,11 @@
 ### copied source code, 
 https://www.amobbs.com/forum.php?mod=viewthread&tid=4560171  
 
+
+### no test as no device
+PORTB as COM driver
+PORTD and PORTC as SEG driver
+
 ### ATmega16 used, port to AVR-GCC
 key points about code & porting, 
 
