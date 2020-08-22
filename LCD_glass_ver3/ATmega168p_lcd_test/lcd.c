@@ -152,8 +152,13 @@ uint16_t frame[4];
 // 數字'0'~'9'
 //const uint8_t number[16] = {0xEB, 0x60, 0xC7, 0xE5, 0x6C, 0xAD, 0xAF, 0xE0, 0xEF, 0xED, 0xEE, 0x2F, 0x8B, 0x67, 0x8F, 0x8E};
 
-// 數字'0'~'9', 'A'~'F'
-const uint8_t number[16] = {0xEB, 0x60, 0xC7, 0xE5, 0x6C, 0xAD, 0xAF, 0xE0, 0xEF, 0xED, 0xEE, 0x2F, 0x8B, 0x67, 0x8F, 0x8E};
+//my special '7', 7-segment
+// 數字'0'~'9', 'A'~'F', dot1, dot2, dot3, top arrow, bottom arrow >
+const uint8_t number[21] = {
+    0xEB, 0x60, 0xC7, 0xE5, 0x6C, 0xAD, 0xAF, 0xE8, 0xEF, 0xED,    // 0 -9
+    0xEE, 0x2F, 0x8B, 0x67, 0x8F, 0x8E,                            // A-F
+    0x10, 0x10, 0x10, 0x10, 0x10                                   // dot
+};
 
 
 /*------------------------------------------------------------------------------
@@ -161,32 +166,41 @@ const uint8_t number[16] = {0xEB, 0x60, 0xC7, 0xE5, 0x6C, 0xAD, 0xAF, 0xE0, 0xEF
 ------------------------------------------------------------------------------*/
 void LCD_Write_Str(unsigned char *str)
 {
-	uint8_t i, Show_Char;
+	uint8_t i, Show_Digit;
 
-    Show_Char=0;
+    Show_Digit=0;
     
 	frame[0] = 0;
 	frame[1] = 0;
 	frame[2] = 0;
 	frame[3] = 0;
 
-	for (i=0; i<6; i++)
-	{
-		// 查詢碼段儲存在Show_Char
-		if((*(str + i) < 0x3A) && (*(str + i) > 0x2F))       // 數字'0'~'9'
-			Show_Char = number[*(str + i) - 0x30];
-		else if((*(str + i) < 0x47) && (*(str + i) > 0x40))  // 字母'A'~'F'
-			Show_Char = number[*(str + i) - 55];
-		else if((*(str + i) < 0x67) && (*(str + i) > 0x60))  // 字母'a'~'f'
-			Show_Char = number[*(str + i) - 87];
+//#define digits 6 // 6 digit LCD
+#define digits 5 // 5 digit LCD
 
-		if(Show_Char & 0x01) frame[0] |= 0x0001 << (i << 1);
-		if(Show_Char & 0x10) frame[0] |= 0x0002 << (i << 1);
-		if(Show_Char & 0x02) frame[1] |= 0x0001 << (i << 1);
-		if(Show_Char & 0x20) frame[1] |= 0x0002 << (i << 1);
-		if(Show_Char & 0x04) frame[2] |= 0x0001 << (i << 1);
-		if(Show_Char & 0x40) frame[2] |= 0x0002 << (i << 1);
-		if(Show_Char & 0x08) frame[3] |= 0x0001 << (i << 1);
-		if(Show_Char & 0x80) frame[3] |= 0x0002 << (i << 1);
+//	for (i=0; i<6; i++)    // 6 digit LCD
+	for (i=0; i<digits; i++)    
+	{
+		// 查詢碼段儲存在Show_Digit
+		if((*(str + i) >= '0') && (*(str + i) <= '9'))       // 數字'0'~'9'
+			Show_Digit = number[*(str + i) - '0'];            // index 0-9
+		else if((*(str + i) >= 'A') && (*(str + i) <= 'F'))  // 字母'A'~'F'
+			Show_Digit = number[*(str + i) - 55];             // index 0xA ~ 0xF
+		else if((*(str + i) >= 'a') && (*(str + i) <= 'f'))  // 字母'a'~'f'
+			Show_Digit = number[*(str + i) - 87];             // index 0xA ~ 0xF
+        else if ((*(str + i) == '.'))
+            Show_Digit = 0x10;
+
+		if(Show_Digit & 0x01) frame[0] |= 0x0001 << (i << 1);
+		if(Show_Digit & 0x10) frame[0] |= 0x0002 << (i << 1);
+		
+        if(Show_Digit & 0x02) frame[1] |= 0x0001 << (i << 1);
+		if(Show_Digit & 0x20) frame[1] |= 0x0002 << (i << 1);
+		
+        if(Show_Digit & 0x04) frame[2] |= 0x0001 << (i << 1);
+		if(Show_Digit & 0x40) frame[2] |= 0x0002 << (i << 1);
+		
+        if(Show_Digit & 0x08) frame[3] |= 0x0001 << (i << 1);
+		if(Show_Digit & 0x80) frame[3] |= 0x0002 << (i << 1);
 	}
 }
