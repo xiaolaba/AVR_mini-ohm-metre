@@ -212,7 +212,7 @@ and if IO PORT pin# like this, it totally LSb - MSb, something just confusing.
 ```
 PD0, PD1, PD2, PD3, PD4, PD5, PD6, PD7  
 1  , 1  , 1  , 1  , 0  , 0  , 0  , 0  
-it is saying F, 0 to to port, but actually is 0x0F when look at bit order for the port 
+it is saying F, 0 to to port, but actually is 0x0F when look at bit order for the PORTD
 
 ```
 so the better arrangement would be like this, maintain the discipline and always code and design with abstraction, ie.
