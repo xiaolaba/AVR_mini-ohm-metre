@@ -212,14 +212,14 @@ and if IO PORT pin# like this, it totally LSb - MSb, something just confusing.
 ```
 PD0, PD1, PD2, PD3, PD4, PD5, PD6, PD7  
 1  , 1  , 1  , 1  , 0  , 0  , 0  , 0  
-it is saying F, 0 to to port, but actually is 0x0F when look at bit order for the PORTD
+it is saying F, 0 to IO port, but actually is 0x0F when look at bit order of the PORTD
 
 ```
 so the better arrangement would be like this, maintain the discipline and always code and design with abstraction, ie.
 ```
 PD7, PD6, PD5, PD4, PD3, PD2, P1, PD0  
 1  , 1  , 1  , 1  , 0  , 0  , 0  , 0  
-now this is east, it is really 0xF0 for the PORTD
+now this is easy, it is really 0xF0 for the PORTD
 ```
 
 and try to see the LCD pin# & digit from right to left, it will looks like this,
@@ -229,24 +229,25 @@ and try to see the LCD pin# & digit from right to left, it will looks like this,
 
 ### re-design, my own LCD mapping and IO drive technique
 the overall mapping,
-![my_7-seg_lcd_glass_map.JPG](my_7-seg_lcd_glass_map.JPG)
+![my_7-seg_lcd_glass_map.JPG](my_7-seg_lcd_glass_map.JPG)  
 
-LCD glass, each com-seg combination is a pair of electrodes of a "capacitor", charging or discharging, liquid-crystal twisted and shadowed light, visual the display.
-mapping has been fixed, COM1 to COM4, Sa and Sb, from 2D array. As purposely define bit#, the Char table could be build. As long as loading the char, output to COM & SEG driver port, the LCD will shows somehing.
+LCD glass, each com-seg combination is a pair of electrodes of a "capacitor", charging or discharging the liquid-crystal twisted and shadowed light, visual the display.  
+  
+mapping has been fixed, for example COM1 to COM4, Sa and Sb, from 2D array. As purposely define bit#, the Char table could be build. As long as loading the char, output to COM & SEG driver port, the LCD will shows somehing.
 
 There is example of how to display a single "0" to LCD glass, due to visual persistence of human's eyes,
-IO bit	IO bit
-Sa:Sb	COM#
-0b11	COM4
-0b01	COM3
-0b11	COM2
-0b10	COM1
+IO bit	IO bit  
+Sa:Sb	COM#  
+0b11	COM4  
+0b01	COM3  
+0b11	COM2  
+0b10	COM1  
+  
+```  
+Sa:Sb = 0b11; COM4 = 0; delay a bit;	// charging the "capacitor"  
+Sa:Sb ^= 0b11; COM4 = 1; delay a bit;	// discharging the "capacitor"  
 
-```
-Sa:Sb = 0b11; COM4 = 0; delay a bit;	// charging the "capacitor"
-Sa:Sb ^= 0b11; COM4 = 1; delay a bit;	// discharging the "capacitor"
-
-Sa:Sb = 0b01; COM3 = 0; delay a bit;	// charging the "capacitor"
+Sa:Sb = 0b01; COM3 = 0; delay a bit;	// charging the "capacitor"  
 Sa:Sb ^= 0b01; COM3 = 1; delay a bit;	// discharging the "capacitor"
 
 Sa:Sb = 0b11; COM2 = 0; delay a bit;	// charging the "capacitor"
