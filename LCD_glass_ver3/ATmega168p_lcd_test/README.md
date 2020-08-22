@@ -259,8 +259,8 @@ Sa:Sb ^= 0b10; COM1 = 1; delay a bit;	// discharging the "capacitor"
 
 
 
-why purpoesly design char map with bit name but forgive segment name sequency ?
-this is trick
+why purpoesly design char map with bit name but forgotten of 7-segment name (A.B,C...) sequency ?  
+this is trick,   
 COM4, we need bit7 & bit3 (green cells) to form Sa:Sb
 COM3, we need bit6 & bit2 (green cells) to form Sa:Sb, and so on,
 it would be easy to code, for example,
