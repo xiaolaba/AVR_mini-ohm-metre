@@ -225,3 +225,37 @@ now this is east, it is really 0xF0 for the PORTD
 and try to see the LCD pin# & digit from right to left, it will looks like this,
 
 ![wiring_diagram_right2left.JPG](wiring_diagram_right2left.JPG)
+
+
+### re-design, my own LCD mapping and IO drive technique
+the overall mapping,
+![my_7-seg_lcd_glass_map.JPG](my_7-seg_lcd_glass_map.JPG)
+
+LCD glass, each com-seg combination is a pair of electrodes of a "capacitor", charging or discharging, liquid-crystal twisted and shadowed light, visual the display.
+mapping has been fixed, COM1 to COM4, Sa and Sb, from 2D array. As purposely define bit#, the Char table could be build. As long as loading the char, output to COM & SEG driver port, the LCD will shows somehing.
+
+There is example of how to display a single "0" to LCD glass, due to visual persistence of human's eyes,
+IO bit	IO bit
+Sa:Sb	COM#
+0b11	COM4
+0b01	COM3
+0b11	COM2
+0b10	COM1
+
+```
+Sa:Sb = 0b11; COM4 = 0; delay a bit;	// charging the "capacitor"
+Sa:Sb ^= 0b11; COM4 = 1; delay a bit;	// discharging the "capacitor"
+
+Sa:Sb = 0b01; COM3 = 0; delay a bit;	// charging the "capacitor"
+Sa:Sb ^= 0b01; COM3 = 1; delay a bit;	// discharging the "capacitor"
+
+Sa:Sb = 0b11; COM2 = 0; delay a bit;	// charging the "capacitor"
+Sa:Sb ^= 0b11; COM2 = 1; delay a bit;	// discharging the "capacitor"
+
+Sa:Sb = 0b10; COM1 = 0; delay a bit;	// charging the "capacitor"
+Sa:Sb ^= 0b10; COM1 = 1; delay a bit;	// discharging the "capacitor"
+
+```
+
+
+
