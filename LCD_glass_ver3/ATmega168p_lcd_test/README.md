@@ -41,17 +41,17 @@ no need build, uses the hex here provided
 lcd.c, almost easy to understand the code and design, but just almost, not really. see this following, and what it does ?
 
 ```
-		if(Show_Digit & 0x01) frame[0] |= 0x0001 << (i << 1);
-		if(Show_Digit & 0x10) frame[0] |= 0x0002 << (i << 1);
+    if(Show_Digit & 0x01) frame[0] |= 0x0001 << (i << 1);
+    if(Show_Digit & 0x10) frame[0] |= 0x0002 << (i << 1);
 		
     if(Show_Digit & 0x02) frame[1] |= 0x0001 << (i << 1);
-		if(Show_Digit & 0x20) frame[1] |= 0x0002 << (i << 1);
+    if(Show_Digit & 0x20) frame[1] |= 0x0002 << (i << 1);
 		
     if(Show_Digit & 0x04) frame[2] |= 0x0001 << (i << 1);
-		if(Show_Digit & 0x40) frame[2] |= 0x0002 << (i << 1);
+    if(Show_Digit & 0x40) frame[2] |= 0x0002 << (i << 1);
 		
     if(Show_Digit & 0x08) frame[3] |= 0x0001 << (i << 1);
-		if(Show_Digit & 0x80) frame[3] |= 0x0002 << (i << 1);
+    if(Show_Digit & 0x80) frame[3] |= 0x0002 << (i << 1);
 ```
 
 Trying not to read above code directly, uses this following code to burn the chip and see the result, let's computer to do "this magic part" for us.  
@@ -193,8 +193,35 @@ void print_i(uint8_t i){
 
 
 ### conclusion
-this code is working, as send string and call to lcd.c, the LCD glass will shows "12345"  
+this code & porting to ATmega168P is working, as sending string and call to lcd.c, the LCD glass will shows "12345".  
 ```  
     LCD_Write_Str((unsigned char*) "12345");  
 ```  
-but if we want more easy code and reading, this design was not the one. It works however so far no easy with me, or perhaps my little brain was not so powerful to understood what original author to told.  
+but if we want more easy code and reading, this design was not the one. It works however so far no easy with me, or perhaps my little brain was not so powerful to understood what original author to told. General undersstanding, the Segment driver signal control only, but it is not easy to read.  
+
+Alignement is form left to right, for example, bit order is bit0, bit1...., digit order is dig1, dig2.... etc., port design and order, PD0, PD1......
+
+
+### let us try further, everything is rigth to left
+
+The habbit, when read a byte in static bit name or form, usually like this,
+```
+bit7 [1111, 0000] bit0, it is saying 0xF0, easy. MSb is at the left, LSb is at the right
+```
+and if IO PORT pin# like this, it totally LSb - MSb, something just confusing.  
+```
+PD0, PD1, PD2, PD3, PD4, PD5, PD6, PD7  
+1  , 1  , 1  , 1  , 0  , 0  , 0  , 0  
+it is saying F, 0 to to port, but actually is 0x0F when look at bit order for the port 
+
+```
+so the better arrangement would be like this, maintain the discipline and always code and design with abstraction, ie.
+```
+PD7, PD6, PD5, PD4, PD3, PD2, P1, PD0  
+1  , 1  , 1  , 1  , 0  , 0  , 0  , 0  
+now this is east, it is really 0xF0 for the PORTD
+```
+
+and try to see the LCD pin# & digit from right to left, it will looks like this,
+
+![wiring_diagram_right2left.JPG](wiring_diagram_right2left.JPG)
