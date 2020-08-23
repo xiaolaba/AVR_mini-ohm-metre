@@ -274,3 +274,24 @@ if (COM1) SaSb = char >> 4 & char >> 0;
 ```
 
 
+the reason and story, try to display a single segment and a signle digit "0", most likely straightforward and easy? not really, it was the problem encoutered. LCD segment could only be seen with a specific condition, COM XOR SEG = 1, it means COM and SEG could not be equal at any time, either com=1 & seg=0 or vise versa, recap the prvious mentioned, electrods pair of capacitor, charging or discharging will gets visual, actually AC signal or polarity control. Fully charged or discharged, no display.  
+```  
+set IO driver bits  
+wait for a while  
+filp all bit of IO driver bits
+wait for a while, then repeat the process
+```
+![7-seg_LCD_glass_one_digit_static_display.JPG](7-seg_LCD_glass_one_digit_static_display.JPG)  
+.  
+.  
+.  
+
+but the problem would be there in case we want more different digits and such static display method is not working as desired.
+
+
+
+
+
+
+
+
