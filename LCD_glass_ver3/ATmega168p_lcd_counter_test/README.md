@@ -4,4 +4,9 @@ count 0-65535, 16 bit, 50ms delay for each count.
 
 test result,
 
-https://youtu.be/c-eBi4rT1PA 
+https://youtu.be/c-eBi4rT1PA   
+.  
+.  
+.  
+[![xiaolaba LCD glass counter](https://img.youtube.com/vi/c-eBi4rT1PA/0.jpg)](https://www.youtube.com/watch?v=c-eBi4rT1PA)
+    
