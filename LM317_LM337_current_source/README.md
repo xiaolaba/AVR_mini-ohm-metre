@@ -6,15 +6,19 @@
 
 ![LM317_LM337.JPG](LM317_LM337.JPG)    
 
-![LM337_constant_current_example.JPG](LM337_constant_current_example.JPG)   
+
 
 參考來源, 有人說HI-FI都用  
 https://www.google.com/search?client=firefox-b-d&q=LM337+Current_Sources_101.pdf  
+![LM337_constant_current_example.JPG](LM337_constant_current_example.JPG)   
 
-倚重大神得指點後, 老實按照人家設計的, LM337 加上嗑墊容 Cs, 果然成了  
+
+### 倚重大神得指點後, 老實按照人家設計的, LM337 加上嗑墊容 Cs, 果然成了  
 4V / 8V 輸入都很好, 恆流接近 125mA, 12V 就下滑了120mA, 不明白原因, 可能是 1/4W 的 10 ohm 電阻熱了很多的影響  
-電路圖給他更新筆記一番  
+
+
+### 電路圖給他更新筆記一番  
 ![LM337_experiment_success.jpg](LM337_experiment_success.jpg)
 
-實驗的數據  
+### 實驗的數據  
 ![LM337_experiment__measurement_success.jpg](LM337_experiment__measurement_success.jpg)  
