@@ -1,5 +1,8 @@
 # mini-ohm-metre
 AVR MCU + LM317 + HD44780 LCD, ohm metre, range 0.010 ohm - 9.999 ohm, re-build  
+
+teseting LCD 1602,  
+PVC160203PTN04, no backlight, ok    
   
 actually, it should be milliohm meter, but it is fine with named mini-ohm-metre as it is mini.  
 
