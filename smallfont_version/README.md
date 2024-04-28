@@ -20,3 +20,6 @@ ATMEGA328P, 16MHz, serial 57600baud, N81
 wiring,
 
 ![milliohm_meter_wiring_2020-07-21_xiaolaba.jpg](milliohm_meter_wiring_2020-07-21_xiaolaba.jpg)
+
+circuit diagram  
+[mini-ohm_schematic.pdf](風扇 mini-ohm_schematic.pdf)
