@@ -1,35 +1,11 @@
-# mini-ohm-metre
+# mini-ohm-metre ver.2
 AVR MCU + LM317 + HD44780 LCD, ohm metre, range 0.010 ohm - 9.999 ohm, re-build  
 
-teseting LCD 1602,  
-PVC160203PTN04, no backlight, ok    
-  
-actually, it should be milliohm meter, but it is fine with named mini-ohm-metre as it is mini.  
+![backup_flash.bat](backup_flash.bat)  
+![burn328.bat](burn328.bat)  
+![miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz.hex](miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz.hex)  
+![miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz.JPG](miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz.JPG)  
+![miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz_schematic.JPG](miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz_schematic.JPG)  
+![風扇_mini-ohm_schematic.pdf](風扇_mini-ohm_schematic.pdf)  
 
-![milliohm_meter_20200720_232438_xiaolaba0.jpg](milliohm_meter_20200720_232438_xiaolaba0.jpg)  
-
-.  
-.  
-lost of source code and schematic diagram, reverse engineering has to be with.  
-.  
-.  
-
-wiring,
-
-![milliohm_meter_wiring_2020-07-21_xiaolaba.jpg](milliohm_meter_wiring_2020-07-21_xiaolaba.jpg)
-
-.  
-.  
-.  
-.  
-Version 2, big digits display and design used, modified LCD backlight, knocked LEDs from blue to white, much better visual and effectiveness.  
-
-
-![miniOhm_ver2.JPG](miniOhm_ver2.JPG).
-
-https://youtu.be/q15g__HHNWE 
-
-
-### [LM317_LM337_current_source](LM317_LM337_current_source)  
-experiment and design  
 
