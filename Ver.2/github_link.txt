@@ -1,0 +1,6 @@
+![backup_flash.bat](backup_flash.bat)  
+![burn328.bat](burn328.bat)  
+![miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz.hex](miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz.hex)  
+![miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz.JPG](miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz.JPG)  
+![miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz_schematic.JPG](miniOhm_metre_largefont_ver2_003sec_m328_115200_16MHz_schematic.JPG)  
+![ОLих_mini-ohm_schematic.pdf](ОLих_mini-ohm_schematic.pdf)  
